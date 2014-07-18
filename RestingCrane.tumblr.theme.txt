@@ -50,7 +50,10 @@
 
 <style media="all">
 html, body { background: #fff; color: rgb(65, 65, 65); margin: 0; padding: 0; border: none; }
-body { font: 1em/1.5em Georgia, Palatino, Times, 'Times New Roman', serif; margin: 0 auto; padding: 1em 10%; max-width: 60em; }
+body {
+    font: 1em/1.5em Georgia, Palatino, Times, 'Times New Roman', serif;
+    margin: 0 auto; padding: 1em 10% 1em 20%; max-width: 60em;
+}
 .title {
     font-family: '{text:Title font}', serif; font-variant: small-caps; text-align: center; letter-spacing: 2px;
 }
@@ -108,11 +111,8 @@ article.post {
 .post-actions {
     position: absolute;
     top: 0;
-    right: 0;
+    right: -30px;
     list-style-type: none;
-}
-.p-name, .e-content {
-    padding-right: 30px;
 }
 
 article.post.link h2::after {
@@ -124,6 +124,8 @@ article.post.link h2::after {
     position: absolute;
     left: 0;
     margin-left: 2%;
+    border-top: 1px dotted #CCC;
+    padding-top: .5em;
     width: 15%;
     font-size: 1.5em;
     text-shadow: 2px 2px 5px #CCC;
