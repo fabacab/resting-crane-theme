@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>{block:SearchPage}Search results for "{SearchQuery}" | {/block:SearchPage}{block:TagPage}{Tag} | {/block:TagPage}{block:PostSummary}{PostSummary} | {/block:PostSummary}{Title}</title>
+
+        {block:Description}
+        <meta name="description" content="{MetaDescription}" />
+        {/block:Description}
+        <!--
+        <meta name="author" content="Custom theme developed by maymay.net" />
+        -->
+        <meta name="copyright" content="Original content is copyright by {Title}'s author &copy; {CopyrightYears}" />
+        <meta name="rating" content="ALL" />
+        <meta name="robots" content="index,follow" />
+        <meta name="viewport" content="width=device-width" />
+
+        <link rel="shortcut icon" href="{Favicon}"/>
+        <link rel="apple-touch-icon" href="{PortraitURL-128}"/>
+        
+        <!-- Facebook API -->
+        <meta property="og:title" content="{Title} - {block:PostSummary}{PostSummary} | {/block:PostSummary}"/>
+        <meta property="og:site_name" content="{Title}"/>
+
+        <!-- Custom theme text and options -->
+        <meta name="text:Blog tagline" content=""/>
+        <meta name="text:Blog footer text" content=""/>
+        <meta name="text:Google Analytics ID" content=""/>
+        <meta name="if:Show copyright in footer" content="1" />
+
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="{RSS}"/>
+
+        <!-- Sequential nav -->
+        {block:Pagination}
+        {block:NextPage}<link rel="next" href="{NextPage}" />{/block:NextPage}
+        {block:PreviousPage}<link rel="prev" href="{PreviousPage}" />{/block:PreviousPage}
+        {/block:Pagination}
+
+        {block:PermalinkPagination}
+        {block:NextPost}<link rel="next" href="{NextPost}" />{/block:NextPost}
+        {block:PreviousPost}<link rel="prev" href="{PreviousPost}" />{/block:PreviousPost}
+        {/block:PermalinkPagination}
+
+        {block:DayPagination}
+        {block:NextDayPage}<link rel="next" href="{NextDayPage}" />{/block:NextDayPage}
+        {block:PreviousDayPage}<link rel="prev" href="{PreviousDayPage}" />{/block:PreviousDayPage}
+        {/block:DayPagination}
+
+<style media="all">
+html, body { background: #fff; color: black; margin: 0; padding: 0; border: none; }
+body { font: .8em/1.5 Verdana, sans-serif; margin: 0 auto; padding: 1em 10%; max-width: 60em; }
+.title {
+    font-family: serif; font-variant: small-caps; text-align: center; letter-spacing: 2px;
+}
+h1, h2 { text-shadow: #DDD 2px 2px 5px; }
+h1 a { color: #000; text-decoration: none; }
+h1 a:hover { text-decoration: underline; }
+
+article:target::before {
+    background-color: yellow;
+    display: inline-block;
+    margin: 0 4em;
+    padding: 2em;
+    content: "\2193"; /* Down arrow. */
+    font-size: larger;
+}
+article:target h2 { margin-top: 0; }
+
+acronym { cursor: help; font-style: italic; border: none; }
+time[datetime][title]:hover {
+    cursor: help;
+}
+blockquote {
+    border-left: 3px solid #CCC;
+    padding-left: 5px;
+}
+blockquote::before, blockquote::after { color: #CCC; }
+blockquote::before {
+    content: "\201C"; /* Left double quotation mark */
+    font-size: xx-large;
+    float: left;
+}
+blockquote::after {
+    content: "\201D"; /* Left double quotation mark */
+    font-size: xx-large;
+    float: right;
+}
+
+#Description .photo { float: right; max-width: 50%; }
+
+img { max-width: 100%; }
+
+main { clear: both; }
+article.post {
+    position: relative;
+}
+.post-actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    list-style-type: none;
+}
+.p-name, .e-content {
+    padding-right: 30px;
+}
+
+article.post.link h2::after {
+    content: "\1F517"; /* Rightwards arrow */
+    padding: 0 1em;
+}
+
+.new-day-block {
+    position: absolute;
+    left: 0;
+    margin-left: 2%;
+    width: 15%;
+    font-size: 1.5em;
+}
+
+@media screen {
+    nav, nav li { display: inline; }
+    nav li::after { content: ", "; }
+    nav li:last-child::after { content: "."; }
+}
+
+footer {
+    font-size: 75%;
+    margin: 2em 0 0; padding: 0 15px; border: 1px dotted #000;
+}
+footer p { margin: 1em 0; padding: 0; }
+.announcement { font-size: larger; font-weight: bold; }
+@media print {
+    body { max-width: auto; }
+    h1, h2 { text-align: left; text-shadow: none; }
+    img {
+        -webkit-filter: grayscale(100%);
+        filter: gray; /* For IE. */
+        filter: grayscale(100%);
+    }
+    a:link, a:visited { color: #000; text-decoration: none; }
+    a:link::after { content: " (" attr(href) ")"; }
+    acronym::after { content: " (" attr(title) ")"; }
+    .vcard .email::after, .vcard .tel::after,
+    acronym a:link::after { content: ''; }
+}
+
+/* User-supplied CSS gets inserted last, so it can ovverride earlier rules. */
+{CustomCSS}
+</style>
+
+    </head>
+    <body{block:PermalinkPage} class="permalink_page{block:PostTitle} {PlaintextPostTitle}{/block:PostTitle}"{/block:PermalinkPage}{block:IndexPage} class="index_page{block:TagPage} tag_page{/block:TagPage}"{/block:IndexPage}>
+        <div class="vcard"><!-- For microformats. Learn more: http://microformats.org/wiki/hcard -->
+
+            <header role="banner">
+                <h1 class="title"><a href="{BlogURL}" class="url org">{Title}</a></h1>
+                {block:IfBlogTagline}<h2 class="title">{text:Blog tagline}</h2>{/block:IfBogTagline}
+
+                <nav>
+                    <ul id="GlobalNav" class="pages">
+                    {block:HasPages}
+                        {block:Pages}<li><a href="{URL}" title="{Label}">{Label}</a></li>{/block:Pages}
+                    {/block:HasPages}
+                    {block:SubmissionsEnabled}
+                        <li><a href="/submit" title="{SubmitLabel}">{SubmitLabel}</a></li>
+                    {/block:SubmissionsEnabled}
+                    {block:AskEnabled}
+                        <li><a href="/ask" title="{AskLabel}">{AskLabel}</a></li>
+                    {/block:AskEnabled}
+                    </ul>
+                </nav>
+
+                {block:Description}
+                    <div id="Description">{Description}</div>
+                {/block:Description}
+            </header>
+
+            <main role="main">
+
+            {block:Posts}
+
+                {block:NewDayDate}
+                <div class="new-day-block">{Month}, {DayOfMonth}{DayOfMonthSuffix}</div>
+                {/block:NewDayDate}
+
+                {block:Text}
+                <article id="post-{PostID}" class="post {PostType} {block:PostTitle} {PlaintextPostTitle}{/block:PostTitle} {TagsAsClasses} h-entry hentry">
+                    <h2 class="p-name entry-title"><a href="{Permalink}" class="u-url" rel="bookmark" title="{lang:Permalink for this post}">{Title}</a></h2>
+                    {block:Submission}
+                    <div class="submission">
+                        <p><a href="{SubmitterURL}" title="{Submitter}"><img src="{SubmitterPortrait-128}" alt="Submitted by {Submitter}" /></a></p>
+                    </div>
+                    {/block:Submission}
+                    <div class="e-content entry-content">
+                        {Body}
+                    </div>
+                    {block:More}
+                    <p class="ReadMore"><a href="{Permalink}">{lang:Read more}</a></p>
+                    {/block:More}
+                    <ul class="post-actions">
+                        <li class="like-button">{LikeButton}</li>
+                        <li class="reblog-button">{ReblogButton}</li>
+                    </ul>
+                    <footer class="ArticleMeta">
+                        <ul>
+                            <li>{block:Date}<time class="dt-published published" datetime="{Year}-{MonthNumberWithZero}-{DayOfMonthWithZero} {24HourWithZero}:{Minutes}:{Seconds}" title="{TimeAgo}">{lang:Posted on DayOfWeek Month DayOfMonthWithSuffix Year}</time>{/block:Date}</li>
+                            {block:ContentSource}
+                            <li class="content-source">
+                                {lang:Source}:
+                                <a href="{SourceURL}">
+                                    {block:SourceLogo}
+                                    <img src="{BlackLogoURL}" width="{LogoWidth}" height="{LogoHeight}" alt="{SourceTitle}" />
+                                    {/block:SourceLogo}
+                                    {SourceTitle}
+                                </a>
+                            </li>
+                            {/block:ContentSource}
+                            {block:RebloggedFrom}
+                            <li class="rebloginfo">{lang:PostTypeNoun reblogged from ReblogParentName with NoteCount notes 2}</li>
+                            {block:RebloggedFrom}
+                            {block:HasTags}
+                            <li class="post-tags">
+                                {lang:Tagged with}
+                                <ul>
+                                    {block:Tags}<li><a href="{TagURL}" class="p-category category" rel="tag">{Tag}</a></li>{/block:Tags}
+                                </ul>
+                            </li>
+                            {/block:HasTags}
+                            {block:PostNotes}
+                            <li class="post-notes">
+                                {block:NoteCount}{NoteCountWithLabel}{/block:NoteCount}
+                                {PostNotes-16}
+                            </li>
+                            {/block:PostNotes}
+                        </ul>
+                    </footer>
+                </article>
+                {/block:Text}
+
+                {block:Photo}
+                <article id="post-{PostID}" class="post {PostType} {block:PostTitle} {PlaintextPostTitle}{/block:PostTitle} {TagsAsClasses} h-entry hentry">
+                    {block:Submission}
+                    <div class="submission">
+                        <p><a href="{SubmitterURL}" title="{Submitter}"><img src="{SubmitterPortrait-128}" alt="Submitted by {Submitter}" /></a></p>
+                    </div>
+                    {/block:Submission}
+                    <div class="e-content entry-content">
+                        {LinkOpenTag}<img class="p-name entry-title u-photo" src="{PhotoURL-500}" width="{PhotoWidth-500}" height="{PhotoHeight-500}" alt="{PhotoAlt}"{block:HighRes} data-high-res="{PhotoURL-HighRes}"{/block:HighRes}>{LinkCloseTag}
+                        {block:Caption}
+                        {Caption}
+                        {/block:Caption}
+                    </div>
+                    <p class="Permalink"><a href="{Permalink}" class="u-url" rel="bookmark">{lang:Permalink for this post}</a></p>
+                    <ul class="post-actions">
+                        <li class="like-button">{LikeButton}</li>
+                        <li class="reblog-button">{ReblogButton}</li>
+                    </ul>
+                    <footer class="ArticleMeta">
+                        <ul>
+                            <li>{block:Date}<time class="dt-published published" datetime="{Year}-{MonthNumberWithZero}-{DayOfMonthWithZero} {24HourWithZero}:{Minutes}:{Seconds}" title="{TimeAgo}">{lang:Posted on DayOfWeek Month DayOfMonthWithSuffix Year}</time>{/block:Date}</li>
+                            {block:ContentSource}
+                            <li class="content-source">
+                                {lang:Source}:
+                                <a href="{SourceURL}">
+                                    {block:SourceLogo}
+                                    <img src="{BlackLogoURL}" width="{LogoWidth}" height="{LogoHeight}" alt="{SourceTitle}" />
+                                    {/block:SourceLogo}
+                                    {SourceTitle}
+                                </a>
+                            </li>
+                            {/block:ContentSource}
+                            {block:RebloggedFrom}
+                            <li class="rebloginfo">{lang:PostTypeNoun reblogged from ReblogParentName with NoteCount notes 2}</li>
+                            {block:RebloggedFrom}
+                            {block:HasTags}
+                            <li class="post-tags">
+                                {lang:Tagged with}
+                                <ul>
+                                    {block:Tags}<li><a href="{TagURL}" class="p-category category" rel="tag">{Tag}</a></li>{/block:Tags}
+                                </ul>
+                            </li>
+                            {/block:HasTags}
+                            {block:PostNotes}
+                            <li class="post-notes">
+                                {block:NoteCount}{NoteCountWithLabel}{/block:NoteCount}
+                                {PostNotes-16}
+                            </li>
+                            {/block:PostNotes}
+                        </ul>
+                    </footer>
+                </article>
+                {/block:Photo}
+
+                {block:Panorama}
+                <article id="post-{PostID}" class="post {PostType} {block:PostTitle} {PlaintextPostTitle}{/block:PostTitle} {TagsAsClasses} h-entry hentry">
+                    {block:Submission}
+                    <div class="submission">
+                        <p><a href="{SubmitterURL}" title="{Submitter}"><img src="{SubmitterPortrait-128}" alt="Submitted by {Submitter}" /></a></p>
+                    </div>
+                    {/block:Submission}
+                    <div class="e-content entry-content">
+                        {LinkOpenTag}<img class="p-name entry-title u-photo" src="{PhotoURL-500}" width="{PhotoWidth-500}" height="{PhotoHeight-500}" alt="{PhotoAlt}"{block:HighRes} data-high-res="{PhotoURL-Panorama}"{/block:HighRes}>{LinkCloseTag}
+                        {block:Caption}
+                        {Caption}
+                        {/block:Caption}
+                    </div>
+                    <p class="Permalink"><a href="{Permalink}" class="u-url" rel="bookmark">{lang:Permalink for this post}</a></p>
+                    <ul class="post-actions">
+                        <li class="like-button">{LikeButton}</li>
+                        <li class="reblog-button">{ReblogButton}</li>
+                    </ul>
+                    <footer class="ArticleMeta">
+                        <ul>
+                            <li>{block:Date}<time class="dt-published published" datetime="{Year}-{MonthNumberWithZero}-{DayOfMonthWithZero} {24HourWithZero}:{Minutes}:{Seconds}" title="{TimeAgo}">{lang:Posted on DayOfWeek Month DayOfMonthWithSuffix Year}</time>{/block:Date}</li>
+                            {block:ContentSource}
+                            <li class="content-source">
+                                {lang:Source}:
+                                <a href="{SourceURL}">
+                                    {block:SourceLogo}
+                                    <img src="{BlackLogoURL}" width="{LogoWidth}" height="{LogoHeight}" alt="{SourceTitle}" />
+                                    {/block:SourceLogo}
+                                    {SourceTitle}
+                                </a>
+                            </li>
+                            {/block:ContentSource}
+                            {block:RebloggedFrom}
+                            <li class="rebloginfo">{lang:PostTypeNoun reblogged from ReblogParentName with NoteCount notes 2}</li>
+                            {block:RebloggedFrom}
+                            {block:HasTags}
+                            <li class="post-tags">
+                                {lang:Tagged with}
+                                <ul>
+                                    {block:Tags}<li><a href="{TagURL}" class="p-category category" rel="tag">{Tag}</a></li>{/block:Tags}
+                                </ul>
+                            </li>
+                            {/block:HasTags}
+                            {block:PostNotes}
+                            <li class="post-notes">
+                                {block:NoteCount}{NoteCountWithLabel}{/block:NoteCount}
+                                {PostNotes-16}
+                            </li>
+                            {/block:PostNotes}
+                        </ul>
+                    </footer>
+                </article>
+                {/block:Panorama}
+
+                {block:Photoset}
+                <article id="post-{PostID}" class="post {PostType} {block:PostTitle} {PlaintextPostTitle}{/block:PostTitle} {TagsAsClasses} h-entry hentry">
+                    {block:Submission}
+                    <div class="submission">
+                        <p><a href="{SubmitterURL}" title="{Submitter}"><img src="{SubmitterPortrait-128}" alt="Submitted by {Submitter}" /></a></p>
+                    </div>
+                    {/block:Submission}
+                    <div class="e-content entry-content">
+
+                        {block:Photos}
+                            {LinkOpenTag}<img src="{PhotoURL-500}" width="{PhotoWidth-500}" height="{PhotoHeight-500}" alt="{PhotoAlt}"{block:HighRes} data-high-res="{PhotoURL-HighRes}"{/block:HighRes}>{LinkCloseTag}
+                            {block:Caption}
+                            {Caption}
+                            {/block:Caption}
+                        {/block:Photos}
+
+                        {block:Caption}
+                        {Caption}
+                        {/block:Caption}
+                    </div>
+                    <p class="Permalink"><a href="{Permalink}" class="u-url" rel="bookmark">{lang:Permalink for this post}</a></p>
+                    <ul class="post-actions">
+                        <li class="like-button">{LikeButton}</li>
+                        <li class="reblog-button">{ReblogButton}</li>
+                    </ul>
+                    <footer class="ArticleMeta">
+                        <ul>
+                            <li>{block:Date}<time class="dt-published published" datetime="{Year}-{MonthNumberWithZero}-{DayOfMonthWithZero} {24HourWithZero}:{Minutes}:{Seconds}" title="{TimeAgo}">{lang:Posted on DayOfWeek Month DayOfMonthWithSuffix Year}</time>{/block:Date}</li>
+                            {block:ContentSource}
+                            <li class="content-source">
+                                {lang:Source}:
+                                <a href="{SourceURL}">
+                                    {block:SourceLogo}
+                                    <img src="{BlackLogoURL}" width="{LogoWidth}" height="{LogoHeight}" alt="{SourceTitle}" />
+                                    {/block:SourceLogo}
+                                    {SourceTitle}
+                                </a>
+                            </li>
+                            {/block:ContentSource}
+                            {block:RebloggedFrom}
+                            <li class="rebloginfo">{lang:PostTypeNoun reblogged from ReblogParentName with NoteCount notes 2}</li>
+                            {block:RebloggedFrom}
+                            {block:HasTags}
+                            <li class="post-tags">
+                                {lang:Tagged with}
+                                <ul>
+                                    {block:Tags}<li><a href="{TagURL}" class="p-category category" rel="tag">{Tag}</a></li>{/block:Tags}
+                                </ul>
+                            </li>
+                            {/block:HasTags}
+                            {block:PostNotes}
+                            <li class="post-notes">
+                                {block:NoteCount}{NoteCountWithLabel}{/block:NoteCount}
+                                {PostNotes-16}
+                            </li>
+                            {/block:PostNotes}
+                        </ul>
+                    </footer>
+                </article>
+                {/block:Photoset}
+
+                {block:Quote}
+                <article id="post-{PostID}" class="post {PostType} {block:PostTitle} {PlaintextPostTitle}{/block:PostTitle} {TagsAsClasses} h-entry hentry">
+                    {block:Submission}
+                    <div class="submission">
+                        <p><a href="{SubmitterURL}" title="{Submitter}"><img src="{SubmitterPortrait-128}" alt="Submitted by {Submitter}" /></a></p>
+                    </div>
+                    {/block:Submission}
+                    <div class="e-content entry-content">
+                        <blockquote class="q_{Length}">{Quote}</blockquote>
+                        {block:Source}
+                            {Source}
+                        {/block:Source}
+                    </div>
+                    <p class="Permalink"><a href="{Permalink}" class="u-url" rel="bookmark">{lang:Permalink for this post}</a></p>
+                    <ul class="post-actions">
+                        <li class="like-button">{LikeButton}</li>
+                        <li class="reblog-button">{ReblogButton}</li>
+                    </ul>
+                    <footer class="ArticleMeta">
+                        <ul>
+                            <li>{block:Date}<time class="dt-published published" datetime="{Year}-{MonthNumberWithZero}-{DayOfMonthWithZero} {24HourWithZero}:{Minutes}:{Seconds}" title="{TimeAgo}">{lang:Posted on DayOfWeek Month DayOfMonthWithSuffix Year}</time>{/block:Date}</li>
+                            {block:ContentSource}
+                            <li class="content-source">
+                                {lang:Source}:
+                                <a href="{SourceURL}">
+                                    {block:SourceLogo}
+                                    <img src="{BlackLogoURL}" width="{LogoWidth}" height="{LogoHeight}" alt="{SourceTitle}" />
+                                    {/block:SourceLogo}
+                                    {SourceTitle}
+                                </a>
+                            </li>
+                            {/block:ContentSource}
+                            {block:RebloggedFrom}
+                            <li class="rebloginfo">{lang:PostTypeNoun reblogged from ReblogParentName with NoteCount notes 2}</li>
+                            {block:RebloggedFrom}
+                            {block:HasTags}
+                            <li class="post-tags">
+                                {lang:Tagged with}
+                                <ul>
+                                    {block:Tags}<li><a href="{TagURL}" class="p-category category" rel="tag">{Tag}</a></li>{/block:Tags}
+                                </ul>
+                            </li>
+                            {/block:HasTags}
+                            {block:PostNotes}
+                            <li class="post-notes">
+                                {block:NoteCount}{NoteCountWithLabel}{/block:NoteCount}
+                                {PostNotes-16}
+                            </li>
+                            {/block:PostNotes}
+                        </ul>
+                    </footer>
+                </article>
+                {/block:Quote}
+
+                {block:Link}
+                <article id="post-{PostID}" class="post {PostType} {block:PostTitle} {PlaintextPostTitle}{/block:PostTitle} {TagsAsClasses} h-entry hentry">
+                    <h2 class="p-name entry-title"><a href="{URL}" {Target}>{block:Thumbnail}<img src="{Thumbnail}" alt="" />{/block:Thumbnail}{Name}</a></h2>
+                    {block:Submission}
+                    <div class="submission">
+                        <p><a href="{SubmitterURL}" title="{Submitter}"><img src="{SubmitterPortrait-128}" alt="Submitted by {Submitter}" /></a></p>
+                    </div>
+                    {/block:Submission}
+                    <div class="e-content entry-content">
+                        {block:Description}
+                            {Description}
+                        {/block:Description}
+                    </div>
+                    <p class="Permalink"><a href="{Permalink}" class="u-url" rel="bookmark">{lang:Permalink for this post}</a></p>
+                    <ul class="post-actions">
+                        <li class="like-button">{LikeButton}</li>
+                        <li class="reblog-button">{ReblogButton}</li>
+                    </ul>
+                    <footer class="ArticleMeta">
+                        <ul>
+                            <li>{block:Date}<time class="dt-published published" datetime="{Year}-{MonthNumberWithZero}-{DayOfMonthWithZero} {24HourWithZero}:{Minutes}:{Seconds}" title="{TimeAgo}">{lang:Posted on DayOfWeek Month DayOfMonthWithSuffix Year}</time>{/block:Date}</li>
+                            {block:ContentSource}
+                            <li class="content-source">
+                                {lang:Source}:
+                                <a href="{SourceURL}">
+                                    {block:SourceLogo}
+                                    <img src="{BlackLogoURL}" width="{LogoWidth}" height="{LogoHeight}" alt="{SourceTitle}" />
+                                    {/block:SourceLogo}
+                                    {SourceTitle}
+                                </a>
+                            </li>
+                            {/block:ContentSource}
+                            {block:RebloggedFrom}
+                            <li class="rebloginfo">{lang:PostTypeNoun reblogged from ReblogParentName with NoteCount notes 2}</li>
+                            {block:RebloggedFrom}
+                            {block:HasTags}
+                            <li class="post-tags">
+                                {lang:Tagged with}
+                                <ul>
+                                    {block:Tags}<li><a href="{TagURL}" class="p-category category" rel="tag">{Tag}</a></li>{/block:Tags}
+                                </ul>
+                            </li>
+                            {/block:HasTags}
+                            {block:PostNotes}
+                            <li class="post-notes">
+                                {block:NoteCount}{NoteCountWithLabel}{/block:NoteCount}
+                                {PostNotes-16}
+                            </li>
+                            {/block:PostNotes}
+                        </ul>
+                    </footer>
+                </article>
+                {/block:Link}
+
+                {block:Chat}
+                <article id="post-{PostID}" class="post {PostType} {block:PostTitle} {PlaintextPostTitle}{/block:PostTitle} {TagsAsClasses} h-entry hentry">
+                    {block:Title}
+                    <h2 class="p-name entry-title"><a href="{Permalink}" class="u-url" rel="bookmark" title="{lang:Permalink for this post}">{Title}</a></h2>
+                    {/block:Title}
+                    {block:Submission}
+                    <div class="submission">
+                        <p><a href="{SubmitterURL}" title="{Submitter}"><img src="{SubmitterPortrait-128}" alt="Submitted by {Submitter}" /></a></p>
+                    </div>
+                    {/block:Submission}
+                    <div class="e-content entry-content">
+                        {block:Lines}
+                        <p class="{Alt}">{block:Label}<span data-speaker-name="{Name}" data-speaker-number="{UserNumber}">{Label}</span> {/block:Label}<q>{Line}</q></p>
+                        {block:Lines}
+                    </div>
+                    <p class="Permalink"><a href="{Permalink}" class="u-url" rel="bookmark">{lang:Permalink for this post}</a></p>
+                    <ul class="post-actions">
+                        <li class="like-button">{LikeButton}</li>
+                        <li class="reblog-button">{ReblogButton}</li>
+                    </ul>
+                    <footer class="ArticleMeta">
+                        <ul>
+                            <li>{block:Date}<time class="dt-published published" datetime="{Year}-{MonthNumberWithZero}-{DayOfMonthWithZero} {24HourWithZero}:{Minutes}:{Seconds}" title="{TimeAgo}">{lang:Posted on DayOfWeek Month DayOfMonthWithSuffix Year}</time>{/block:Date}</li>
+                            {block:ContentSource}
+                            <li class="content-source">
+                                {lang:Source}:
+                                <a href="{SourceURL}">
+                                    {block:SourceLogo}
+                                    <img src="{BlackLogoURL}" width="{LogoWidth}" height="{LogoHeight}" alt="{SourceTitle}" />
+                                    {/block:SourceLogo}
+                                    {SourceTitle}
+                                </a>
+                            </li>
+                            {/block:ContentSource}
+                            {block:RebloggedFrom}
+                            <li class="rebloginfo">{lang:PostTypeNoun reblogged from ReblogParentName with NoteCount notes 2}</li>
+                            {block:RebloggedFrom}
+                            {block:HasTags}
+                            <li class="post-tags">
+                                {lang:Tagged with}
+                                <ul>
+                                    {block:Tags}<li><a href="{TagURL}" class="p-category category" rel="tag">{Tag}</a></li>{/block:Tags}
+                                </ul>
+                            </li>
+                            {/block:HasTags}
+                            {block:PostNotes}
+                            <li class="post-notes">
+                                {block:NoteCount}{NoteCountWithLabel}{/block:NoteCount}
+                                {PostNotes-16}
+                            </li>
+                            {/block:PostNotes}
+                        </ul>
+                    </footer>
+                </article>
+                {/block:Chat}
+
+                {block:Audio}
+                <article id="post-{PostID}" class="post {PostType} {block:PostTitle} {PlaintextPostTitle}{/block:PostTitle} {TagsAsClasses} h-entry hentry">
+                    {block:Submission}
+                    <div class="submission">
+                        <p><a href="{SubmitterURL}" title="{Submitter}"><img src="{SubmitterPortrait-128}" alt="Submitted by {Submitter}" /></a></p>
+                    </div>
+                    {/block:Submission}
+                    <div class="e-content entry-content">
+                        <div class="media-player-wrapper">
+                            {AudioPlayer}
+                            {block:AlbumArt}
+                            <img class="u-photo" src="{AlbumArtURL}" alt="{block:Album}{Album}{/block:Album}{block:TrackName} - {TrackName}{/block:TrackName}{block:Artist}, by {Artist}{/block:Artist}" />
+                            {/block:AlbumArt}
+                        </div>
+                        {block:Caption}
+                        {Caption}
+                        {/block:Caption}
+                    </div>
+                    <p class="Permalink"><a href="{Permalink}" class="u-url" rel="bookmark">{lang:Permalink for this post}</a></p>
+                    <ul class="post-actions">
+                        <li class="like-button">{LikeButton}</li>
+                        <li class="reblog-button">{ReblogButton}</li>
+                    </ul>
+                    <footer class="ArticleMeta">
+                        <ul>
+                            <li>{block:Date}<time class="dt-published published" datetime="{Year}-{MonthNumberWithZero}-{DayOfMonthWithZero} {24HourWithZero}:{Minutes}:{Seconds}" title="{TimeAgo}">{lang:Posted on DayOfWeek Month DayOfMonthWithSuffix Year}</time>{/block:Date}</li>
+                            {block:ContentSource}
+                            <li class="content-source">
+                                {lang:Source}:
+                                <a href="{SourceURL}">
+                                    {block:SourceLogo}
+                                    <img src="{BlackLogoURL}" width="{LogoWidth}" height="{LogoHeight}" alt="{SourceTitle}" />
+                                    {/block:SourceLogo}
+                                    {SourceTitle}
+                                </a>
+                            </li>
+                            {/block:ContentSource}
+                            {block:RebloggedFrom}
+                            <li class="rebloginfo">{lang:PostTypeNoun reblogged from ReblogParentName with NoteCount notes 2}</li>
+                            {block:RebloggedFrom}
+                            {block:HasTags}
+                            <li class="post-tags">
+                                {lang:Tagged with}
+                                <ul>
+                                    {block:Tags}<li><a href="{TagURL}" class="p-category category" rel="tag">{Tag}</a></li>{/block:Tags}
+                                </ul>
+                            </li>
+                            {/block:HasTags}
+                            {block:PostNotes}
+                            <li class="post-notes">
+                                {block:NoteCount}{NoteCountWithLabel}{/block:NoteCount}
+                                {PostNotes-16}
+                            </li>
+                            {/block:PostNotes}
+                        </ul>
+                    </footer>
+                </article>
+                {/block:Audio}
+
+                {block:Video}
+                <article id="post-{PostID}" class="post {PostType} {block:PostTitle} {PlaintextPostTitle}{/block:PostTitle} {TagsAsClasses} h-entry hentry">
+                    {block:Submission}
+                    <div class="submission">
+                        <p><a href="{SubmitterURL}" title="{Submitter}"><img src="{SubmitterPortrait-128}" alt="Submitted by {Submitter}" /></a></p>
+                    </div>
+                    {/block:Submission}
+                    <div class="e-content entry-content">
+                        <div class="media-player-wrapper">
+                            {VideoEmbed-500}
+                        </div>
+                        {block:Caption}
+                        {Caption}
+                        {/block:Caption}
+                    </div>
+                    <p class="Permalink"><a href="{Permalink}" class="u-url" rel="bookmark">{lang:Permalink for this post}</a></p>
+                    <ul class="post-actions">
+                        <li class="like-button">{LikeButton}</li>
+                        <li class="reblog-button">{ReblogButton}</li>
+                    </ul>
+                    <footer class="ArticleMeta">
+                        <ul>
+                            <li>{block:Date}<time class="dt-published published" datetime="{Year}-{MonthNumberWithZero}-{DayOfMonthWithZero} {24HourWithZero}:{Minutes}:{Seconds}" title="{TimeAgo}">{lang:Posted on DayOfWeek Month DayOfMonthWithSuffix Year}</time>{/block:Date}</li>
+                            {block:ContentSource}
+                            <li class="content-source">
+                                {lang:Source}:
+                                <a href="{SourceURL}">
+                                    {block:SourceLogo}
+                                    <img src="{BlackLogoURL}" width="{LogoWidth}" height="{LogoHeight}" alt="{SourceTitle}" />
+                                    {/block:SourceLogo}
+                                    {SourceTitle}
+                                </a>
+                            </li>
+                            {/block:ContentSource}
+                            {block:RebloggedFrom}
+                            <li class="rebloginfo">{lang:PostTypeNoun reblogged from ReblogParentName with NoteCount notes 2}</li>
+                            {block:RebloggedFrom}
+                            {block:HasTags}
+                            <li class="post-tags">
+                                {lang:Tagged with}
+                                <ul>
+                                    {block:Tags}<li><a href="{TagURL}" class="p-category category" rel="tag">{Tag}</a></li>{/block:Tags}
+                                </ul>
+                            </li>
+                            {/block:HasTags}
+                            {block:PostNotes}
+                            <li class="post-notes">
+                                {block:NoteCount}{NoteCountWithLabel}{/block:NoteCount}
+                                {PostNotes-16}
+                            </li>
+                            {/block:PostNotes}
+                        </ul>
+                    </footer>
+                </article>
+                {/block:Video}
+
+                {block:Answer}
+                <article id="post-{PostID}" class="post {PostType} {block:PostTitle} {PlaintextPostTitle}{/block:PostTitle} {TagsAsClasses} h-entry hentry">
+                    <div class="e-content entry-content">
+                        <div class="question">
+                            <p><img src="{AskerPortraitURL-128}" />{lang:Asker asked 2}:</p>
+                            <blockquote>{Question}</blockquote>
+                        </div>
+
+                        {block:Answerer}
+                        <div class="answer">
+                            <p><img src="{AnswererPortraitURL-128}" alt="" class="u-photo" />{Answerer}:</p>
+                            <blockquote>{Answer}</blockquote>
+                        </div>
+                        {/block:Answerer}
+
+                        <div class="replies">
+                            {Replies}
+                        </div>
+                    </div>
+                    <p class="Permalink"><a href="{Permalink}" class="u-url" rel="bookmark">{lang:Permalink for this post}</a></p>
+                    <ul class="post-actions">
+                        <li class="like-button">{LikeButton}</li>
+                        <li class="reblog-button">{ReblogButton}</li>
+                    </ul>
+                    <footer class="ArticleMeta">
+                        <ul>
+                            <li>{block:Date}<time class="dt-published published" datetime="{Year}-{MonthNumberWithZero}-{DayOfMonthWithZero} {24HourWithZero}:{Minutes}:{Seconds}" title="{TimeAgo}">{lang:Posted on DayOfWeek Month DayOfMonthWithSuffix Year}</time>{/block:Date}</li>
+                            {block:ContentSource}
+                            <li class="content-source">
+                                {lang:Source}:
+                                <a href="{SourceURL}">
+                                    {block:SourceLogo}
+                                    <img src="{BlackLogoURL}" width="{LogoWidth}" height="{LogoHeight}" alt="{SourceTitle}" />
+                                    {/block:SourceLogo}
+                                    {SourceTitle}
+                                </a>
+                            </li>
+                            {/block:ContentSource}
+                            {block:RebloggedFrom}
+                            <li class="rebloginfo">{lang:PostTypeNoun reblogged from ReblogParentName with NoteCount notes 2}</li>
+                            {block:RebloggedFrom}
+                            {block:HasTags}
+                            <li class="post-tags">
+                                {lang:Tagged with}
+                                <ul>
+                                    {block:Tags}<li><a href="{TagURL}" class="p-category category" rel="tag">{Tag}</a></li>{/block:Tags}
+                                </ul>
+                            </li>
+                            {/block:HasTags}
+                            {block:PostNotes}
+                            <li class="post-notes">
+                                {block:NoteCount}{NoteCountWithLabel}{/block:NoteCount}
+                                {PostNotes-16}
+                            </li>
+                            {/block:PostNotes}
+                        </ul>
+                    </footer>
+                </article>
+                {/block:Answer}
+
+            {/block:Posts}
+
+            </main>
+
+            <nav>
+                <ul id="Pagination" class="page_nav">
+
+                    {block:Pagination}
+                    {block:PreviousPage}<li class="page_previous"><a href="{PreviousPage}">{lang:Previous page}</a></li>{/block:PreviousPage}
+                    {block:JumpPagination length="5"}
+                        {block:CurrentPage}
+                        <li><span class="current_page">{PageNumber}</span></li>
+                        {/block:CurrentPage}
+                        {block:JumpPage}
+                        <li><a class="jump_page" href="{URL}">{PageNumber}</a></li>
+                        {/block:JumpPage}
+                    {/block:JumpPagination}
+                    {block:NextPage}<li class="page_next"><a href="{NextPage}">{lang:Next page}</a></li>{/block:NextPage} 	 	 	   
+                    {/block:Pagination}
+
+                    {block:PermalinkPagination}
+                    {block:PreviousPost}<li class="page_previous"><a href="{PreviousPost}">{lang:Previous post}</a></li>{/block:PreviousPost}
+                    {block:NextPost}<li class="page_next"><a href="{NextPost}">{lang:Next post}</a></li>{/block:NextPost}
+                    {/block:PermalinkPagination}
+
+                    {block:DayPagination}
+                    {block:PreviousDayPage}<li class="page_previous"><a href="{PreviousDayPage}">{lang:Previous day}</a></li>{/block:PreviousDayPage}
+                    {block:NextDayPage}<li class="page_next"><a href="{NextDayPage}">{lang:Next day}</a></li>{/block:NextDayPage}
+                    {/block:DayPagination}
+
+                </ul>
+                <p>{lang:Page CurrentPage of TotalPages}<p>
+            </nav>
+            {/block:Pagination}
+
+            <footer role="contentinfo">
+                {block:IfBlogFooterText}
+                <p>{text:Blog footer text}</p>
+                {/block:IfBlogFooterText}
+                {block:IfShowCopyrightInFooter}<p>Copyright &copy; {Title}, {CopyrightYears}. All rights reserved.</p>{/block:IfShowCopyrightInFooter}
+            </footer>
+
+        <div><!-- .vcard -->
+    </body>
+</html>
