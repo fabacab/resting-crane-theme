@@ -23,9 +23,10 @@
         <meta property="og:site_name" content="{Title}"/>
 
         <!-- Custom theme text and options -->
-        <meta name="text:Blog tagline" content=""/>
-        <meta name="text:Blog footer text" content=""/>
-        <meta name="text:Google Analytics ID" content=""/>
+        <meta name="text:Title font" content="serif" />
+        <meta name="text:Blog tagline" content="" />
+        <meta name="text:Blog footer text" content="" />
+        <meta name="text:Google Analytics ID" content="" />
         <meta name="if:Show copyright in footer" content="1" />
         <meta name="if:Credit theme developer" content="1" />
 
@@ -51,7 +52,7 @@
 html, body { background: #fff; color: rgb(65, 65, 65); margin: 0; padding: 0; border: none; }
 body { font: 1em/1.5em Georgia, Palatino, Times, 'Times New Roman', serif; margin: 0 auto; padding: 1em 10%; max-width: 60em; }
 .title {
-    font-family: serif; font-variant: small-caps; text-align: center; letter-spacing: 2px;
+    font-family: '{text:Title font}', serif; font-variant: small-caps; text-align: center; letter-spacing: 2px;
 }
 header { margin-bottom: 2em; }
 h1, h2 { text-shadow: #DDD 2px 2px 5px; }
