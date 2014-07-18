@@ -118,9 +118,9 @@ article.post.link h2::after {
 }
 
 @media screen {
-    nav, nav li { display: inline; }
-    nav li::after { content: ", "; }
-    nav li:last-child::after { content: "."; }
+    nav, nav li, li.post-tags li { display: inline; }
+    nav li::after, li.post-tags li::after { content: ", "; }
+    nav li:last-child::after, li.post-tags li:last-child::after { content: "."; }
 }
 
 footer {
