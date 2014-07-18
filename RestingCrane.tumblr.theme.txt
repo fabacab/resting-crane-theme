@@ -89,7 +89,13 @@ blockquote::after {
     float: right;
 }
 strong { font-weight: bold; }
-#Description .photo { float: right; max-width: 50%; }
+#Description .photo {
+    float: right; max-width: 50%;
+    box-shadow: 5px 5px 5px #CCC;
+}
+#Description .photo.circle {
+    border-radius: 50%;
+}
 
 img { max-width: 100%; }
 
@@ -175,7 +181,7 @@ footer p { margin: 1em 0; padding: 0; }
 
                 {block:Description}
                     <div id="Description">
-                        {block:ShowAvatar}<img src="{PortraitURL-128}" class="photo" alt="" />{/block:ShowAvatar}
+                        {block:ShowAvatar}<img src="{PortraitURL-128}" class="photo {AvatarShape}" alt="" />{/block:ShowAvatar}
                         {Description}
                     </div>
                 {/block:Description}
