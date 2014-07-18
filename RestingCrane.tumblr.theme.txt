@@ -114,9 +114,34 @@ article.post {
     right: -30px;
     list-style-type: none;
 }
+.post-actions a {
+    color: #CCC;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+}
+.post-actions a:hover { color: rgb(65, 65, 65); }
+.post-actions .permalink-button a,
+.post-actions .shortlink-button a {
+    padding: 0 .25em;
+}
+.post-actions .permalink-button a:hover::after,
+.post-actions .shortlink-button a:hover::after {
+    content: attr(href);
+    white-space: nowrap;
+    font-weight: normal;
+    position: absolute;
+    right: 0;
+    display: block;
+    margin-top: -.5em;
+    border-radius: 15px;
+    padding: 2em 1em;
+    background: #FFF;
+    box-shadow: 2px 2px 10px #CCC;
+}
 
 article.post.link h2::after {
-    content: "\1F517"; /* Rightwards arrow */
+    content: "\1F517"; /* Link icon */
     padding: 0 1em;
 }
 
@@ -217,6 +242,11 @@ footer p { margin: 1em 0; padding: 0; }
                     <ul class="post-actions">
                         <li class="like-button">{LikeButton}</li>
                         <li class="reblog-button">{ReblogButton}</li>
+                        <li class="permalink-button"><a href="{Permalink}" title="{lang:Permalink for this post}">&#x00B6;</a></li><!-- Pilcrow -->
+                        <li class="shortlink-button"><a href="{ShortURL}" title="{lang:Short URL for this post}">&#xa7;</a></li><!-- Section sign -->
+                        {block:Twitter}
+                        <li class="tweet-button"><a href="https://twitter.com/intent/tweet/?text={block:PostSummary}%20{URLEncodedPostSummary}%20{/block:PostSummary}{URLEncodedPermalink}%20%E1%94%A5%40{TwitterUsername}" title="{lang:Tweet this}" {Target}>&#x1f426;</a></li><!-- Unicode bird character -->
+                        {/block:Twitter}
                     </ul>
                     <footer class="ArticleMeta">
                         <ul>
@@ -267,10 +297,14 @@ footer p { margin: 1em 0; padding: 0; }
                         {Caption}
                         {/block:Caption}
                     </div>
-                    <p class="Permalink"><a href="{Permalink}" class="u-url" rel="bookmark">{lang:Permalink for this post}</a></p>
                     <ul class="post-actions">
                         <li class="like-button">{LikeButton}</li>
                         <li class="reblog-button">{ReblogButton}</li>
+                        <li class="permalink-button"><a href="{Permalink}" title="{lang:Permalink for this post}">&#x00B6;</a></li><!-- Pilcrow -->
+                        <li class="shortlink-button"><a href="{ShortURL}" title="{lang:Short URL for this post}">&#xa7;</a></li><!-- Section sign -->
+                        {block:Twitter}
+                        <li class="tweet-button"><a href="https://twitter.com/intent/tweet/?text={block:PostSummary}%20{URLEncodedPostSummary}%20{/block:PostSummary}{URLEncodedPermalink}%20%E1%94%A5%40{TwitterUsername}" title="{lang:Tweet this}" {Target}>&#x1f426;</a></li>
+                        {/block:Twitter}
                     </ul>
                     <footer class="ArticleMeta">
                         <ul>
@@ -321,10 +355,14 @@ footer p { margin: 1em 0; padding: 0; }
                         {Caption}
                         {/block:Caption}
                     </div>
-                    <p class="Permalink"><a href="{Permalink}" class="u-url" rel="bookmark">{lang:Permalink for this post}</a></p>
                     <ul class="post-actions">
                         <li class="like-button">{LikeButton}</li>
                         <li class="reblog-button">{ReblogButton}</li>
+                        <li class="permalink-button"><a href="{Permalink}" title="{lang:Permalink for this post}">&#x00B6;</a></li><!-- Pilcrow -->
+                        <li class="shortlink-button"><a href="{ShortURL}" title="{lang:Short URL for this post}">&#xa7;</a></li><!-- Section sign -->
+                        {block:Twitter}
+                        <li class="tweet-button"><a href="https://twitter.com/intent/tweet/?text={block:PostSummary}%20{URLEncodedPostSummary}%20{/block:PostSummary}{URLEncodedPermalink}%20%E1%94%A5%40{TwitterUsername}" title="{lang:Tweet this}" {Target}>&#x1f426;</a></li>
+                        {/block:Twitter}
                     </ul>
                     <footer class="ArticleMeta">
                         <ul>
@@ -379,10 +417,14 @@ footer p { margin: 1em 0; padding: 0; }
                         {Caption}
                         {/block:Caption}
                     </div>
-                    <p class="Permalink"><a href="{Permalink}" class="u-url" rel="bookmark">{lang:Permalink for this post}</a></p>
                     <ul class="post-actions">
                         <li class="like-button">{LikeButton}</li>
                         <li class="reblog-button">{ReblogButton}</li>
+                        <li class="permalink-button"><a href="{Permalink}" title="{lang:Permalink for this post}">&#x00B6;</a></li><!-- Pilcrow -->
+                        <li class="shortlink-button"><a href="{ShortURL}" title="{lang:Short URL for this post}">&#xa7;</a></li><!-- Section sign -->
+                        {block:Twitter}
+                        <li class="tweet-button"><a href="https://twitter.com/intent/tweet/?text={block:PostSummary}%20{URLEncodedPostSummary}%20{/block:PostSummary}{URLEncodedPermalink}%20%E1%94%A5%40{TwitterUsername}" title="{lang:Tweet this}" {Target}>&#x1f426;</a></li>
+                        {/block:Twitter}
                     </ul>
                     <footer class="ArticleMeta">
                         <ul>
@@ -433,10 +475,14 @@ footer p { margin: 1em 0; padding: 0; }
                             {Source}
                         {/block:Source}
                     </div>
-                    <p class="Permalink"><a href="{Permalink}" class="u-url" rel="bookmark">{lang:Permalink for this post}</a></p>
                     <ul class="post-actions">
                         <li class="like-button">{LikeButton}</li>
                         <li class="reblog-button">{ReblogButton}</li>
+                        <li class="permalink-button"><a href="{Permalink}" title="{lang:Permalink for this post}">&#x00B6;</a></li><!-- Pilcrow -->
+                        <li class="shortlink-button"><a href="{ShortURL}" title="{lang:Short URL for this post}">&#xa7;</a></li><!-- Section sign -->
+                        {block:Twitter}
+                        <li class="tweet-button"><a href="https://twitter.com/intent/tweet/?text={block:PostSummary}%20{URLEncodedPostSummary}%20{/block:PostSummary}{URLEncodedPermalink}%20%E1%94%A5%40{TwitterUsername}" title="{lang:Tweet this}" {Target}>&#x1f426;</a></li>
+                        {/block:Twitter}
                     </ul>
                     <footer class="ArticleMeta">
                         <ul>
@@ -487,10 +533,14 @@ footer p { margin: 1em 0; padding: 0; }
                             {Description}
                         {/block:Description}
                     </div>
-                    <p class="Permalink"><a href="{Permalink}" class="u-url" rel="bookmark">{lang:Permalink for this post}</a></p>
                     <ul class="post-actions">
                         <li class="like-button">{LikeButton}</li>
                         <li class="reblog-button">{ReblogButton}</li>
+                        <li class="permalink-button"><a href="{Permalink}" title="{lang:Permalink for this post}">&#x00B6;</a></li><!-- Pilcrow -->
+                        <li class="shortlink-button"><a href="{ShortURL}" title="{lang:Short URL for this post}">&#xa7;</a></li><!-- Section sign -->
+                        {block:Twitter}
+                        <li class="tweet-button"><a href="https://twitter.com/intent/tweet/?text={block:PostSummary}%20{URLEncodedPostSummary}%20{/block:PostSummary}{URLEncodedPermalink}%20%E1%94%A5%40{TwitterUsername}" title="{lang:Tweet this}" {Target}>&#x1f426;</a></li>
+                        {/block:Twitter}
                     </ul>
                     <footer class="ArticleMeta">
                         <ul>
@@ -543,10 +593,14 @@ footer p { margin: 1em 0; padding: 0; }
                         <p class="{Alt}">{block:Label}<span data-speaker-name="{Name}" data-speaker-number="{UserNumber}">{Label}</span> {/block:Label}<q>{Line}</q></p>
                         {block:Lines}
                     </div>
-                    <p class="Permalink"><a href="{Permalink}" class="u-url" rel="bookmark">{lang:Permalink for this post}</a></p>
                     <ul class="post-actions">
                         <li class="like-button">{LikeButton}</li>
                         <li class="reblog-button">{ReblogButton}</li>
+                        <li class="permalink-button"><a href="{Permalink}" title="{lang:Permalink for this post}">&#x00B6;</a></li><!-- Pilcrow -->
+                        <li class="shortlink-button"><a href="{ShortURL}" title="{lang:Short URL for this post}">&#xa7;</a></li><!-- Section sign -->
+                        {block:Twitter}
+                        <li class="tweet-button"><a href="https://twitter.com/intent/tweet/?text={block:PostSummary}%20{URLEncodedPostSummary}%20{/block:PostSummary}{URLEncodedPermalink}%20%E1%94%A5%40{TwitterUsername}" title="{lang:Tweet this}" {Target}>&#x1f426;</a></li>
+                        {/block:Twitter}
                     </ul>
                     <footer class="ArticleMeta">
                         <ul>
@@ -602,10 +656,14 @@ footer p { margin: 1em 0; padding: 0; }
                         {Caption}
                         {/block:Caption}
                     </div>
-                    <p class="Permalink"><a href="{Permalink}" class="u-url" rel="bookmark">{lang:Permalink for this post}</a></p>
                     <ul class="post-actions">
                         <li class="like-button">{LikeButton}</li>
                         <li class="reblog-button">{ReblogButton}</li>
+                        <li class="permalink-button"><a href="{Permalink}" title="{lang:Permalink for this post}">&#x00B6;</a></li><!-- Pilcrow -->
+                        <li class="shortlink-button"><a href="{ShortURL}" title="{lang:Short URL for this post}">&#xa7;</a></li><!-- Section sign -->
+                        {block:Twitter}
+                        <li class="tweet-button"><a href="https://twitter.com/intent/tweet/?text={block:PostSummary}%20{URLEncodedPostSummary}%20{/block:PostSummary}{URLEncodedPermalink}%20%E1%94%A5%40{TwitterUsername}" title="{lang:Tweet this}" {Target}>&#x1f426;</a></li>
+                        {/block:Twitter}
                     </ul>
                     <footer class="ArticleMeta">
                         <ul>
@@ -658,10 +716,14 @@ footer p { margin: 1em 0; padding: 0; }
                         {Caption}
                         {/block:Caption}
                     </div>
-                    <p class="Permalink"><a href="{Permalink}" class="u-url" rel="bookmark">{lang:Permalink for this post}</a></p>
                     <ul class="post-actions">
                         <li class="like-button">{LikeButton}</li>
                         <li class="reblog-button">{ReblogButton}</li>
+                        <li class="permalink-button"><a href="{Permalink}" title="{lang:Permalink for this post}">&#x00B6;</a></li><!-- Pilcrow -->
+                        <li class="shortlink-button"><a href="{ShortURL}" title="{lang:Short URL for this post}">&#xa7;</a></li><!-- Section sign -->
+                        {block:Twitter}
+                        <li class="tweet-button"><a href="https://twitter.com/intent/tweet/?text={block:PostSummary}%20{URLEncodedPostSummary}%20{/block:PostSummary}{URLEncodedPermalink}%20%E1%94%A5%40{TwitterUsername}" title="{lang:Tweet this}" {Target}>&#x1f426;</a></li>
+                        {/block:Twitter}
                     </ul>
                     <footer class="ArticleMeta">
                         <ul>
@@ -718,10 +780,14 @@ footer p { margin: 1em 0; padding: 0; }
                             {Replies}
                         </div>
                     </div>
-                    <p class="Permalink"><a href="{Permalink}" class="u-url" rel="bookmark">{lang:Permalink for this post}</a></p>
                     <ul class="post-actions">
                         <li class="like-button">{LikeButton}</li>
                         <li class="reblog-button">{ReblogButton}</li>
+                        <li class="permalink-button"><a href="{Permalink}" title="{lang:Permalink for this post}">&#x00B6;</a></li><!-- Pilcrow -->
+                        <li class="shortlink-button"><a href="{ShortURL}" title="{lang:Short URL for this post}">&#xa7;</a></li><!-- Section sign -->
+                        {block:Twitter}
+                        <li class="tweet-button"><a href="https://twitter.com/intent/tweet/?text={block:PostSummary}%20{URLEncodedPostSummary}%20{/block:PostSummary}{URLEncodedPermalink}%20%E1%94%A5%40{TwitterUsername}" title="{lang:Tweet this}" {Target}>&#x1f426;</a></li>
+                        {/block:Twitter}
                     </ul>
                     <footer class="ArticleMeta">
                         <ul>
