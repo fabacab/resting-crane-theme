@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>{block:SearchPage}Search results for "{SearchQuery}" | {/block:SearchPage}{block:TagPage}{Tag} | {/block:TagPage}{block:PostSummary}{PostSummary} | {/block:PostSummary}{Title}</title>
+        <title>{block:SearchPage}{lang:Search results for SearchQuery} | {/block:SearchPage}{block:TagPage}{Tag} | {/block:TagPage}{block:PostSummary}{PostSummary} | {/block:PostSummary}{Title}</title>
 
         {block:Description}
         <meta name="description" content="{MetaDescription}" />
@@ -144,7 +144,8 @@ article.post.link h2::after {
     content: "\1F517"; /* Link icon */
     padding: 0 1em;
 }
-
+.search_query::before { content: open-quote; }
+.search_query::after { content: close-quote; }
 .new-day-block {
     position: absolute;
     left: 0;
@@ -155,6 +156,11 @@ article.post.link h2::after {
     font-size: 1.5em;
     text-shadow: 2px 2px 5px #CCC;
 }
+.new-day-block a {
+    text-decoration: none;
+    color: rgb(65, 65, 65);
+}
+.new-day-block a:hover { text-decoration: underline; }
 
 @media screen {
     nav, nav li, li.post-tags li { display: inline; }
@@ -194,6 +200,7 @@ footer p { margin: 1em 0; padding: 0; }
         <div class="vcard"><!-- For microformats. Learn more: http://microformats.org/wiki/hcard -->
 
             <header role="banner">
+
                 <h1 class="title"><a href="{BlogURL}" class="url org">{Title}</a></h1>
                 {block:IfBlogTagline}<h2 class="title">{text:Blog tagline}</h2>{/block:IfBlogTagline}
 
@@ -221,10 +228,24 @@ footer p { margin: 1em 0; padding: 0; }
 
             <main role="main">
 
+                {block:DayPage}
+                <h2 class="title">{Month} {DayOfMonth}, {Year}</h2>
+                {/block:DayPage}
+                {block:TagPage}
+                <h2 class="title">{lang:Showing posts tagged Tag 3}</h2>
+                {/block:TagPage}
+                {block:SearchPage}
+                <h2 class="title">{lang:Showing SearchResultCount results for SearchQuery 2}</h2>
+                {/block:SearchPage}
+
             {block:Posts}
 
                 {block:NewDayDate}
-                <div class="new-day-block">{Month} {DayOfMonth}<sup>{DayOfMonthSuffix}</sup></div>
+                <div class="new-day-block">
+                    {block:Date}
+                    <a href="{BlogURL}day/{Year}/{MonthNumberWithZero}/{DayOfMonthWithZero}/" title="{lang:Show all posts made on this day}">{Month} {DayOfMonth}<sup>{DayOfMonthSuffix}</sup></a>
+                    {/block:Date}
+                </div>
                 {/block:NewDayDate}
 
                 {block:Text}
