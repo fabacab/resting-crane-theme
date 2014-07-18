@@ -47,8 +47,8 @@
         {/block:DayPagination}
 
 <style media="all">
-html, body { background: #fff; color: black; margin: 0; padding: 0; border: none; }
-body { font: .8em/1.5 Verdana, sans-serif; margin: 0 auto; padding: 1em 10%; max-width: 60em; }
+html, body { background: #fff; color: rgb(65, 65, 65); margin: 0; padding: 0; border: none; }
+body { font: 1em/1.5em Georgia, Palatino, Times, 'Times New Roman', serif; margin: 0 auto; padding: 1em 10%; max-width: 60em; }
 .title {
     font-family: serif; font-variant: small-caps; text-align: center; letter-spacing: 2px;
 }
@@ -66,7 +66,7 @@ article:target::before {
     font-size: larger;
 }
 article:target h2 { margin-top: 0; }
-
+a { color: rgb(65, 110, 210); }
 acronym { cursor: help; font-style: italic; border: none; }
 time[datetime][title]:hover {
     cursor: help;
@@ -74,6 +74,8 @@ time[datetime][title]:hover {
 blockquote {
     border-left: 3px solid #CCC;
     padding-left: 5px;
+    color: rgba(0, 0, 0, .5);
+    font-weight: lighter;
 }
 blockquote::before, blockquote::after { color: #CCC; }
 blockquote::before {
@@ -86,7 +88,7 @@ blockquote::after {
     font-size: xx-large;
     float: right;
 }
-
+strong { font-weight: bold; }
 #Description .photo { float: right; max-width: 50%; }
 
 img { max-width: 100%; }
@@ -181,7 +183,7 @@ footer p { margin: 1em 0; padding: 0; }
             {block:Posts}
 
                 {block:NewDayDate}
-                <div class="new-day-block">{Month}, {DayOfMonth}{DayOfMonthSuffix}</div>
+                <div class="new-day-block">{Month} {DayOfMonth}<sup>{DayOfMonthSuffix}</sup></div>
                 {/block:NewDayDate}
 
                 {block:Text}
