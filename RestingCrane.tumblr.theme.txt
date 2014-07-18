@@ -174,7 +174,10 @@ footer p { margin: 1em 0; padding: 0; }
                 </nav>
 
                 {block:Description}
-                    <div id="Description">{Description}</div>
+                    <div id="Description">
+                        {block:ShowAvatar}<img src="{PortraitURL-128}" class="photo" alt="" />{/block:ShowAvatar}
+                        {Description}
+                    </div>
                 {/block:Description}
             </header>
 
