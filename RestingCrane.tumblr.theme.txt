@@ -356,10 +356,7 @@ footer p { margin: 1em 0; padding: 0; }
                     <div class="e-content entry-content">
 
                         {block:Photos}
-                            {LinkOpenTag}<img src="{PhotoURL-500}" width="{PhotoWidth-500}" height="{PhotoHeight-500}" alt="{PhotoAlt}"{block:HighRes} data-high-res="{PhotoURL-HighRes}"{/block:HighRes}>{LinkCloseTag}
-                            {block:Caption}
-                            {Caption}
-                            {/block:Caption}
+                            {LinkOpenTag}<img src="{PhotoURL-500}" width="{PhotoWidth-500}" height="{PhotoHeight-500}" alt="{block:Caption}{Caption}{/block:Caption}"{block:HighRes} data-high-res="{PhotoURL-HighRes}"{/block:HighRes}>{LinkCloseTag}
                         {/block:Photos}
 
                         {block:Caption}
