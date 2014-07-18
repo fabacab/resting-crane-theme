@@ -162,6 +162,8 @@ article.post.link h2::after {
     nav li:last-child::after, li.post-tags li:last-child::after { content: "."; }
 }
 
+#Pagination + p { text-align: right; }
+
 footer {
     font-size: 75%;
     margin: 2em 0 0; padding: 0 15px; border: 1px dotted #000;
