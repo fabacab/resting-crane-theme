@@ -154,7 +154,7 @@ footer p { margin: 1em 0; padding: 0; }
 
             <header role="banner">
                 <h1 class="title"><a href="{BlogURL}" class="url org">{Title}</a></h1>
-                {block:IfBlogTagline}<h2 class="title">{text:Blog tagline}</h2>{/block:IfBogTagline}
+                {block:IfBlogTagline}<h2 class="title">{text:Blog tagline}</h2>{/block:IfBlogTagline}
 
                 <nav>
                     <ul id="GlobalNav" class="pages">
