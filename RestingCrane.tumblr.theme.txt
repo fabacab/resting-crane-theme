@@ -7,9 +7,9 @@
         {block:Description}
         <meta name="description" content="{MetaDescription}" />
         {/block:Description}
-        <!--
+        {block:IfCreditThemeDeveloper}
         <meta name="author" content="Custom theme developed by maymay.net" />
-        -->
+        {/block:IfCreditThemeDeveloper}
         <meta name="copyright" content="Original content is copyright by {Title}'s author &copy; {CopyrightYears}" />
         <meta name="rating" content="ALL" />
         <meta name="robots" content="index,follow" />
@@ -27,6 +27,7 @@
         <meta name="text:Blog footer text" content=""/>
         <meta name="text:Google Analytics ID" content=""/>
         <meta name="if:Show copyright in footer" content="1" />
+        <meta name="if:Credit theme developer" content="1" />
 
         <link rel="alternate" type="application/rss+xml" title="RSS" href="{RSS}"/>
 
@@ -795,6 +796,7 @@ footer p { margin: 1em 0; padding: 0; }
                 <p>{text:Blog footer text}</p>
                 {/block:IfBlogFooterText}
                 {block:IfShowCopyrightInFooter}<p>Copyright &copy; {Title}, {CopyrightYears}. All rights reserved.</p>{/block:IfShowCopyrightInFooter}
+                {block:IfCreditThemeDeveloper}<p>{Title} is proudly displayed in <a href="https://github.com/meitar/resting-crane-theme/">Resting Crane Theme</a> by <a href="//maymay.net/">maymay</a>, a <a href="http://days.maybemaimed.com/cyberbusking">cyberbusker extraordinaire</a>. Your <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=meitarm@gmail.com&currency_code=USD&amount=&item_name=Resting%20Crane%20Theme&return={URLEncodedBlogURL}&notify_url=&cbt=&page_style=">donations</a> are appreciated! &hearts;</p>{/block:IfCreditThemeDeveloper}
             </footer>
 
         <div><!-- .vcard -->
