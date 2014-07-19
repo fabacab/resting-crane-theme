@@ -107,6 +107,7 @@ img { max-width: 100%; box-shadow: 2px 2px 10px #CCC; }
 main { clear: both; }
 article.post {
     position: relative;
+    margin: 2em 0;
 }
 .post-actions {
     position: absolute;
