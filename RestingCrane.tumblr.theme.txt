@@ -93,7 +93,9 @@ blockquote::after {
     font-size: xx-large;
     float: right;
 }
-.q_short { font-size: xx-large; line-height: 1.25em; }
+.q_short, .q_medium { line-height: 1.25em; }
+.q_short { font-size: xx-large; }
+.q_medium { font-size: x-large; }
 strong { font-weight: bold; }
 #Description .photo {
     float: right; max-width: 50%;
